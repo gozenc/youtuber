@@ -36,7 +36,8 @@ function main() {
     console.error(`[yt-dlp] [error] ${data}`);
   });
   yt.stdout.on("end", () => {
-    if (args.includes("--noconv")) {s
+    if (args.includes("--noconv")) {
+      s;
       return;
     }
     if (args.includes("--mp3")) {
