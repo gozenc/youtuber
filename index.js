@@ -22,7 +22,7 @@ function main() {
   }
 
   let filename = "";
-  const yt = spawn(`yt-dlp`, [url]);
+  const yt = spawn(`yt-dlp`, [url, "--cookies-from-browser=chrome"]);
   yt.stdout.on("data", (data) => {
     data = data.toString();
     console.log(`[yt-dlp] ${data}`);
@@ -44,13 +44,13 @@ function main() {
     if (args.includes("--mp3")) {
       console.log("Downloaded .webm, starting .mp3 conversion for", filename);
       const slugified = slugify(filename);
-      fs.renameSync(filename, slugified);
+      fs.copyFileSync(filename, slugified);
       await convertWithFFMPEG(mp3Flags(slugified));
       return;
     }
     console.log("Downloaded .webm, starting .mp4 conversion for", filename);
     const slugified = slugify(filename);
-    fs.renameSync(filename, slugified);
+    fs.copyFileSync(filename, slugified);
     await convertWithFFMPEG(mp4Flags(slugified));
   });
 }
